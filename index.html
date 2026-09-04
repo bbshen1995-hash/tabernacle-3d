@@ -341,8 +341,8 @@ body.proj .th2{font-size:17px}
     <div class="spacer"></div>
     <button class="btn" data-modal="model">這個模型哪裡是推測</button>
     <button class="btn" data-modal="units">度量衡</button>
-    <button class="btn" data-modal="three">只留三句</button>
-    <button class="btn" data-modal="how">怎麼用</button>
+    <button class="btn" data-modal="three">最要緊的三句</button>
+    <button class="btn" data-modal="how">說明</button>
   </footer>
 </div>
 
@@ -1003,7 +1003,7 @@ TAB.GUIDE = [
   notes:'出 40:34-38'
 },
 {
-  id:'three', title:'如果只留三句', lead:'備課到最後，留這三句就夠。',
+  id:'three', title:'最要緊的三句', lead:'備課到最後，留這三句就夠。',
   show:{ layers:'full', keep:[], at:[50,4,0], dist:132, th:0.95, ph:0.98 },
   quotes:'THREE'
 }
@@ -2695,15 +2695,19 @@ function openModal(kind){
   var h = '';
   if (kind === 'how'){
     try { localStorage.setItem('tab3d-seen','1'); } catch (e) {}
-    h += '<h2>怎麼用這個工具</h2><div class="sub">出埃及記 25-31、35-40　｜　1 肘以 45 公分概算</div>';
-    h += '<p>這是一座會幕的立體模型。每一件器具、每一個空間、每一個在裡面工作的人，點下去都有一段說明，'
+    // 第一個畫面要答的是「這是什麼」。操作說明是第二順位，收進底下的小節。
+    h += '<h2>這是一座會幕的立體模型</h2><div class="sub">出埃及記 25-31、35-40　｜　1 肘以 45 公分概算</div>';
+    h += '<p>會幕是三千多年前，以色列人在曠野裡照著神給的圖樣搭起來的帳棚。'
+       + '這裡把它整座立起來，可以繞著看，也可以一層一層剖開來看裡面。</p>';
+    h += '<p>每一件器具、每一個空間、每一個在裡面工作的人，點下去都有一段說明，'
        + '講它是什麼、為什麼要這樣做、做來幹嘛。說明底下的「經文註解」按鈕，列出這一段的經文章節。</p>';
-    h += '<hr><p><b>轉動與縮放</b>　左鍵拖曳轉動，滾輪往游標指到的地方縮放，雙擊把那一點拉到眼前，右鍵或 Shift 拖曳平移。</p>';
+    h += '<h3 class="sec">怎麼操作</h3>';
+    h += '<p><b>轉動與縮放</b>　左鍵拖曳轉動，滾輪往游標指到的地方縮放，雙擊把那一點拉到眼前，右鍵或 Shift 拖曳平移。</p>';
     h += '<p><b>左欄</b>　上面兩個分頁。「器具與空間」逐件看，點分區的標題會出現整個分區的說明。'
        + '「信仰引導」是跨越單件器具的幾條主線，點下去畫面會跟著切到相關位置。</p>';
     h += '<p><b>剖開來看</b>　右上角的圖層面板由外而內排，可以一層一層掀掉，看到裡面的器具與人。</p>';
     h += '<p><b>走一遍</b>　按右上角的「走一遍」，會從院門一路帶到約櫃，十六站。</p>';
-    h += '<hr><p style="color:#767f8b;font-size:12.5px">模型上有些大小是經文沒有給、為了畫得出來才定的。'
+    h += '<h3 class="sec">在講台上用之前</h3><p style="color:#767f8b;font-size:12.5px">模型上有些大小是經文沒有給、為了畫得出來才定的。'
        + '哪些可以直接引用、哪些只能說「推算大約是」，全部寫在底下的<b>「這個模型哪裡是推測」</b>。'
        + '講台上要用數字之前，請先看那一頁。</p>';
   }
@@ -2720,7 +2724,7 @@ function openModal(kind){
     });
   }
   if (kind === 'three'){
-    h += '<h2>如果只留三句</h2><div class="sub">備課到最後，留這三句就夠</div>';
+    h += '<h2>最要緊的三句</h2><div class="sub">備課到最後，留這三句就夠</div>';
     TAB.THREE_LINES.forEach(function(t){ h += '<div class="quote">'+esc(t)+'</div>'; });
   }
   document.getElementById('modalBox').innerHTML = h;
