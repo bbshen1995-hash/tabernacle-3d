@@ -5,22 +5,22 @@
 <title>會幕 3D 教學工具｜出埃及記 25-31、35-40</title>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="description" content="會幕的立體模型。每一件器具、每一個空間、每一個在裡面工作的人，點下去都有一段說明，講它是什麼、為什麼這樣做、做來幹嘛。經文章節收在註解按鈕裡。">
-<meta name="theme-color" content="#0f1216">
+<meta name="theme-color" content="#f2ede7">
 <meta property="og:type" content="website">
 <meta property="og:title" content="會幕 3D 教學工具">
 <meta property="og:description" content="出埃及記 25-31、35-40。三十張說明牌、七個分區、五個人物比例尺，可以剖開一層一層看。">
 <meta property="og:locale" content="zh_TW">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Crect width=%2232%22 height=%2232%22 rx=%226%22 fill=%22%230f1216%22/%3E%3Cpath d=%22M5 21h22v3H5z%22 fill=%22%23c99a3f%22/%3E%3Cpath d=%22M8 10h16v11H8z%22 fill=%22%23b08d57%22/%3E%3Cpath d=%22M13 14h6v7h-6z%22 fill=%22%23eac257%22/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Crect width=%2232%22 height=%2232%22 rx=%226%22 fill=%22%234a3528%22/%3E%3Cpath d=%22M5 21h22v3H5z%22 fill=%22%23c99a3f%22/%3E%3Cpath d=%22M8 10h16v11H8z%22 fill=%22%23b08d57%22/%3E%3Cpath d=%22M13 14h6v7h-6z%22 fill=%22%23eac257%22/%3E%3C/svg%3E">
 </head>
 <body>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#0f1216; --panel:#171b21; --panel2:#1d222a; --line:#2a313b;
-  --ink:#e7e4dc; --ink2:#a9b1bc; --ink3:#767f8b;
-  --gold:#d7a93f; --acc:#8fb3d9;
-  --s-text:#4ea87a; --s-derived:#c99a3f; --s-none:#c4637a;
-  --t1:#4ea87a; --t2:#5b8fc9; --t3:#c4637a;
+  /* 暖色淺底：米色紙面、深棕字，冷色只留霧藍（經文章節）與鼠尾草綠（開關）。
+     多色相、低飽和、柔和對比，避免深色底。 */
+  --bg:#f2ede7; --panel:#faf8f5; --panel2:#f1ebe3; --line:#e0d6ca; --hover:#f0e9df; --sel:#e9dfd2;
+  --ink:#2a2622; --ink2:#5f544d; --ink3:#8b7b6f; --head:#4a3528;
+  --gold:#a7803a; --acc:#5f7488; --sage:#7d8f6e;
   --f:"Noto Sans TC","PingFang TC","Heiti TC","Microsoft JhengHei",system-ui,sans-serif;
 }
 html,body{height:100%}
@@ -29,14 +29,14 @@ body{background:var(--bg);color:var(--ink);font-family:var(--f);font-size:14px;l
 
 /* ── 頂列 ───────────────────────────── */
 header{display:flex;align-items:center;gap:14px;padding:0 16px;height:52px;background:var(--panel);border-bottom:1px solid var(--line);flex:0 0 auto;z-index:20}
-header h1{font-size:15px;font-weight:600;letter-spacing:.04em;white-space:nowrap}
+header h1{font-size:15px;font-weight:600;letter-spacing:.12em;color:var(--head);white-space:nowrap}
 header h1 small{display:block;font-size:10.5px;font-weight:400;color:var(--ink3);letter-spacing:.06em;line-height:1.3}
 .spacer{flex:1}
-.btn{background:var(--panel2);border:1px solid var(--line);color:var(--ink2);padding:6px 11px;border-radius:6px;font-family:var(--f);font-size:12.5px;cursor:pointer;white-space:nowrap;transition:.14s}
-.btn:hover{border-color:#3c4653;color:var(--ink)}
-.btn.on{background:#2b3542;border-color:#4a5867;color:#fff}
-.btn.gold{border-color:#6a5620;color:var(--gold)}
-.btn.gold:hover{background:#2a2415}
+.btn{background:var(--panel);border:1px solid var(--line);color:var(--ink2);padding:6px 11px;border-radius:6px;font-family:var(--f);font-size:12.5px;cursor:pointer;white-space:nowrap;transition:.14s}
+.btn:hover{border-color:#cbbfb0;color:var(--ink)}
+.btn.on{background:var(--head);border-color:var(--head);color:#faf8f5}
+.btn.gold{border-color:#d3bd8f;color:#8a6a2f}
+.btn.gold:hover{background:#f4ecdc}
 .seg{display:flex;gap:0;border:1px solid var(--line);border-radius:6px;overflow:hidden}
 .seg .btn{border:0;border-radius:0;border-right:1px solid var(--line)}
 .seg .btn:last-child{border-right:0}
@@ -56,15 +56,15 @@ canvas.dragging{cursor:grabbing}
 #list button.zone span{font-size:10.5px;color:var(--ink3)}
 #list button.zone b{font-size:12.5px;color:var(--ink2);font-weight:600;letter-spacing:.06em}
 #list button{display:flex;align-items:center;gap:8px;width:100%;text-align:left;background:none;border:0;border-left:2px solid transparent;color:var(--ink2);font-family:var(--f);font-size:13px;padding:6px 14px;cursor:pointer;transition:.12s}
-#list button:hover{background:#1e232b;color:var(--ink)}
-#list button.sel{background:#232b35;color:#fff;border-left-color:var(--gold)}
+#list button:hover{background:var(--hover);color:var(--ink)}
+#list button.sel{background:var(--sel);color:var(--head);border-left-color:var(--gold);font-weight:600}
 .dot{width:7px;height:7px;border-radius:50%;flex:0 0 7px}
 
 /* ── 右側細節 ───────────────────────── */
 #detail{width:0;flex:0 0 0;background:var(--panel);border-left:1px solid var(--line);overflow-y:auto;transition:.2s;opacity:0}
 #detail.open{width:372px;flex:0 0 372px;opacity:1}
 #detail .inner{padding:16px 18px 40px}
-#detail h2{font-size:17px;font-weight:600;margin-bottom:3px}
+#detail h2{font-size:18px;font-weight:600;margin-bottom:3px;color:var(--head);letter-spacing:.1em}
 .ref{font-size:12px;color:var(--acc);letter-spacing:.03em;margin-bottom:11px}
 .badge{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;padding:3px 9px;border-radius:20px;border:1px solid;margin-bottom:14px}
 h3.sec{font-size:11.5px;letter-spacing:.16em;color:var(--ink3);margin:20px 0 8px;padding-bottom:5px;border-bottom:1px solid var(--line)}
@@ -74,15 +74,15 @@ table.spec td.k{width:62px;color:var(--ink3);padding-right:10px;white-space:nowr
 table.spec td.v{color:var(--ink)}
 .foot{margin-top:12px;padding-top:10px;border-top:1px solid var(--line);font-size:12.5px;line-height:1.85;color:var(--ink2)}
 body.proj .foot{font-size:15px}
-.warn{background:#241a1e;border:1px solid #4a2b34;border-radius:7px;padding:10px 12px;font-size:12.5px;color:#e3bfc8;margin-top:8px}
+.warn{background:#f5ece5;border:1px solid #e3c9bb;border-radius:4px;padding:10px 12px;font-size:12.5px;color:#744531;margin-top:8px}
 .warn ul{margin:0;padding-left:16px}
 .warn li{margin:3px 0}
 .th{border-left:3px solid;padding:8px 0 8px 11px;margin:9px 0;font-size:13px}
 .th .tag{font-size:10.5px;letter-spacing:.1em;display:block;margin-bottom:3px;opacity:.9}
 .th .vs{color:var(--acc);font-size:11.5px}
-.caution{background:#1e1a12;border:1px solid #4a3d1c;border-radius:7px;padding:11px 13px;margin-top:10px}
+.caution{background:#f6efe2;border:1px solid #e2d2b2;border-radius:4px;padding:11px 13px;margin-top:10px}
 .caution b{display:block;color:var(--gold);font-size:13px;margin-bottom:6px}
-.caution p{font-size:12.5px;color:#d6cbb0;margin:4px 0}
+.caution p{font-size:12.5px;color:#5a4a36;margin:4px 0}
 .close{position:sticky;top:0;float:right;background:var(--panel);border:0;color:var(--ink3);font-size:19px;cursor:pointer;line-height:1;padding:2px 4px}
 .close:hover{color:var(--ink)}
 
@@ -93,25 +93,25 @@ footer{flex:0 0 auto;display:flex;align-items:center;gap:16px;padding:0 16px;hei
 
 /* ── 3D 疊層標籤 ────────────────────── */
 #labels{position:absolute;inset:0;pointer-events:none;overflow:hidden}
-.lab{position:absolute;transform:translate(-50%,-50%);background:rgba(15,18,22,.82);border:1px solid var(--line);border-left-width:3px;border-radius:5px;padding:3px 9px;font-size:12px;color:var(--ink);white-space:nowrap;pointer-events:auto;cursor:pointer;transition:opacity .15s}
-.lab:hover{background:rgba(35,43,53,.95)}
+.lab{position:absolute;transform:translate(-50%,-50%);background:rgba(250,248,245,.92);border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:3px;box-shadow:0 1px 4px rgba(42,38,34,.12);padding:3px 9px;font-size:12px;color:var(--ink);white-space:nowrap;pointer-events:auto;cursor:pointer;transition:opacity .15s}
+.lab:hover{background:#fff}
 .lab.dim{opacity:.28}
-.dlab{position:absolute;transform:translate(-50%,-50%);background:rgba(15,18,22,.9);border-radius:4px;padding:2px 7px;font-size:11.5px;font-weight:600;white-space:nowrap;pointer-events:none}
+.dlab{position:absolute;transform:translate(-50%,-50%);background:rgba(250,248,245,.92);color:var(--head);border:1px solid var(--line);border-radius:3px;padding:2px 7px;font-size:11.5px;font-weight:600;white-space:nowrap;pointer-events:none}
 .compass{position:absolute;transform:translate(-50%,-50%);font-size:13px;font-weight:700;color:#4a4133;text-shadow:0 1px 2px rgba(255,250,235,.85),0 0 6px rgba(255,250,235,.6);pointer-events:none;letter-spacing:.1em}
 
 /* ── 導覽 ───────────────────────────── */
-#tour{position:absolute;left:50%;bottom:18px;transform:translateX(-50%);width:min(660px,calc(100% - 40px));background:rgba(19,23,29,.95);border:1px solid var(--line);border-radius:10px;padding:14px 16px;display:none;backdrop-filter:blur(6px)}
+#tour{position:absolute;left:50%;bottom:18px;transform:translateX(-50%);width:min(660px,calc(100% - 40px));background:rgba(250,248,245,.96);border:1px solid var(--line);border-radius:4px;box-shadow:0 4px 18px rgba(42,38,34,.14);padding:14px 16px;display:none;backdrop-filter:blur(6px)}
 #tour.open{display:block}
-#tour .th2{font-size:14.5px;font-weight:600;color:var(--gold);margin-bottom:5px}
+#tour .th2{font-size:14.5px;font-weight:600;color:var(--head);letter-spacing:.08em;margin-bottom:5px}
 #tour p{font-size:13px;color:var(--ink2);line-height:1.75}
 #tour .row{display:flex;align-items:center;gap:10px;margin-top:11px}
 #tour .pg{font-size:11.5px;color:var(--ink3);letter-spacing:.1em}
 
 /* ── 對話框 ─────────────────────────── */
-#modal{position:fixed;inset:0;background:rgba(8,10,13,.72);display:none;align-items:center;justify-content:center;z-index:60;padding:24px}
+#modal{position:fixed;inset:0;background:rgba(42,38,34,.38);display:none;align-items:center;justify-content:center;z-index:60;padding:24px}
 #modal.open{display:flex}
-#modal .box{background:var(--panel);border:1px solid var(--line);border-radius:12px;max-width:680px;width:100%;max-height:82vh;overflow-y:auto;padding:24px 28px 28px}
-#modal h2{font-size:18px;margin-bottom:4px}
+#modal .box{background:var(--panel);border:1px solid var(--line);border-radius:4px;box-shadow:0 10px 40px rgba(42,38,34,.18);max-width:680px;width:100%;max-height:82vh;overflow-y:auto;padding:24px 28px 28px}
+#modal h2{font-size:19px;margin-bottom:4px;color:var(--head);letter-spacing:.1em}
 #modal .sub{font-size:12px;color:var(--ink3);margin-bottom:16px}
 #modal p{font-size:13.5px;color:var(--ink2);margin:7px 0}
 #modal li{font-size:13.5px;color:var(--ink2);margin:5px 0}
@@ -121,23 +121,23 @@ footer{flex:0 0 auto;display:flex;align-items:center;gap:16px;padding:0 16px;hei
 #modal hr{border:0;border-top:1px solid var(--line);margin:18px 0}
 .quote{border-left:3px solid var(--gold);padding:6px 0 6px 13px;margin:11px 0;font-size:13.5px;color:var(--ink)}
 
-#hint{position:absolute;left:14px;top:12px;font-size:11.5px;color:#cfd5dd;background:rgba(15,18,22,.62);padding:5px 10px;border-radius:6px;pointer-events:none;backdrop-filter:blur(2px)}
+#hint{position:absolute;left:14px;top:12px;font-size:11.5px;color:var(--ink2);background:rgba(250,248,245,.82);border:1px solid var(--line);padding:5px 10px;border-radius:3px;pointer-events:none;backdrop-filter:blur(2px)}
 @media(max-width:1100px){
   #side{width:196px;flex:0 0 196px}
   #detail.open{width:320px;flex:0 0 320px}
 }
 
 /* ── 圖層浮動面板 ───────────────────── */
-#layers{position:absolute;right:12px;top:12px;background:rgba(19,23,29,.92);border:1px solid var(--line);border-radius:9px;padding:9px 10px;backdrop-filter:blur(6px);width:150px}
+#layers{position:absolute;right:12px;top:12px;background:rgba(250,248,245,.94);border:1px solid var(--line);border-radius:4px;box-shadow:0 2px 10px rgba(42,38,34,.10);padding:9px 10px;backdrop-filter:blur(6px);width:150px}
 #layers .cap{font-size:10.5px;letter-spacing:.16em;color:var(--ink3);margin-bottom:7px;display:flex;justify-content:space-between;align-items:center}
 #layers .cap i{font-style:normal;cursor:pointer;color:var(--ink3);font-size:15px;line-height:1}
 #layers button{display:flex;align-items:center;gap:7px;width:100%;text-align:left;background:none;border:0;color:var(--ink3);font-family:var(--f);font-size:12px;padding:3px 2px;cursor:pointer;border-radius:4px}
-#layers button:hover{background:#232a33;color:var(--ink)}
+#layers button:hover{background:var(--hover);color:var(--ink)}
 #layers button.on{color:var(--ink)}
-#layers button .sw{width:22px;height:12px;border-radius:7px;background:#333c47;position:relative;flex:0 0 22px;transition:.15s}
-#layers button .sw::after{content:"";position:absolute;top:2px;left:2px;width:8px;height:8px;border-radius:50%;background:#6d7885;transition:.15s}
-#layers button.on .sw{background:#4a6b52}
-#layers button.on .sw::after{left:12px;background:#bfe6cc}
+#layers button .sw{width:22px;height:12px;border-radius:7px;background:#ddd3c6;position:relative;flex:0 0 22px;transition:.15s}
+#layers button .sw::after{content:"";position:absolute;top:2px;left:2px;width:8px;height:8px;border-radius:50%;background:#fff;transition:.15s}
+#layers button.on .sw{background:var(--sage)}
+#layers button.on .sw::after{left:12px;background:#fff}
 #layers .div{height:1px;background:var(--line);margin:6px 0}
 #layers.collapsed .body{display:none}
 
@@ -152,25 +152,25 @@ footer{flex:0 0 auto;display:flex;align-items:center;gap:16px;padding:0 16px;hei
 #list.off{display:none}
 #guide button{display:block;width:100%;text-align:left;background:none;border:0;border-left:2px solid transparent;
   color:var(--ink2);font-family:var(--f);font-size:13px;padding:9px 14px;cursor:pointer;transition:.12s;line-height:1.5}
-#guide button:hover{background:#1e232b;color:var(--ink)}
-#guide button.sel{background:#232b35;color:#fff;border-left-color:var(--gold)}
+#guide button:hover{background:var(--hover);color:var(--ink)}
+#guide button.sel{background:var(--sel);color:var(--head);border-left-color:var(--gold)}
 #guide button i{display:block;font-style:normal;font-size:11px;color:var(--ink3);margin-top:2px}
 #guide .cap{padding:12px 14px 4px;font-size:11px;letter-spacing:.14em;color:var(--ink3)}
 .lead{font-size:13.5px;color:var(--ink2);background:var(--panel2);border-radius:7px;padding:10px 12px;margin:10px 0 4px}
-.arranged{font-size:11.5px;color:#c99a3f;margin-top:8px}
+.arranged{font-size:11.5px;color:#8a6a2f;margin-top:8px}
 
 
 /* ── 說明牌正文。這是每張卡片的主體，要好讀。 ───────────── */
 .story{font-size:14.5px;line-height:2.0;color:var(--ink);margin:2px 0 16px;letter-spacing:.012em;text-align:justify}
-.care{border-left:3px solid var(--gold);background:rgba(201,162,63,.07);padding:10px 12px;margin:0 0 14px;
-      font-size:13px;line-height:1.85;color:#dfd3b4}
+.care{border-left:3px solid var(--gold);background:rgba(167,128,58,.08);padding:10px 12px;margin:0 0 14px;
+      font-size:13px;line-height:1.85;color:#5a4a36}
 
 /* 經文註解：收起來，要看才展開 */
 .noteWrap{margin:0 0 18px}
 .noteBtn{background:var(--panel2);border:1px solid var(--line);color:var(--ink2);
          padding:5px 12px;border-radius:20px;font-family:var(--f);font-size:12px;cursor:pointer;transition:.14s}
-.noteBtn:hover{color:var(--ink);border-color:#3c4552}
-.noteBtn.on{background:#243040;border-color:#3f5570;color:#cfe0f2}
+.noteBtn:hover{color:var(--ink);border-color:#cbbfb0}
+.noteBtn.on{background:#e6ebf0;border-color:#bfccd8;color:#3f5468}
 .noteBtn::before{content:'▸ ';font-size:10px}
 .noteBtn.on::before{content:'▾ '}
 .noteBody{display:none;margin-top:9px;padding:10px 12px;background:var(--panel2);
@@ -235,20 +235,20 @@ body.proj .th2{font-size:17px}
 
   main{position:relative}
 
-  #scrim{display:block;position:absolute;inset:0;background:rgba(0,0,0,.45);
+  #scrim{display:block;position:absolute;inset:0;background:rgba(42,38,34,.30);
          opacity:0;pointer-events:none;transition:.2s;z-index:28}
   #scrim.on{opacity:1;pointer-events:auto}
 
   #side{position:absolute;left:0;top:0;bottom:0;z-index:30;
         width:min(80vw,300px);flex-basis:auto;
         transform:translateX(-101%);transition:transform .22s ease;
-        box-shadow:6px 0 22px rgba(0,0,0,.45)}
+        box-shadow:6px 0 22px rgba(42,38,34,.18)}
   #side.open{transform:none}
 
   #detail{position:absolute;left:0;right:0;bottom:0;top:auto;z-index:29;
           width:auto;flex-basis:auto;max-height:66%;
           border-left:0;border-top:1px solid var(--line);
-          border-radius:12px 12px 0 0;box-shadow:0 -8px 26px rgba(0,0,0,.42)}
+          border-radius:6px 6px 0 0;box-shadow:0 -8px 26px rgba(42,38,34,.16)}
 
   #layers{right:8px;top:8px;font-size:11.5px;max-width:46vw}
   #hint{display:none}
@@ -267,6 +267,20 @@ body.proj .th2{font-size:17px}
   header h1, body.proj header h1{font-size:12.5px}
   .btn, body.proj .btn{font-size:12px;padding:6px 10px}
 }
+
+/* ═══ 單件近看 ═══════════════════════════════════════════
+   選到器具時把它單獨放在圓台上看；這顆按鈕切回場景。 */
+.isoBtn{float:right;margin:2px 8px 0 0;background:var(--panel);border:1px solid var(--line);color:var(--ink2);
+        padding:3px 10px;border-radius:3px;font-family:var(--f);font-size:11.5px;cursor:pointer;letter-spacing:.04em}
+body.iso #layers{display:none}
+.isoBtn:hover{color:var(--ink);border-color:#cbbfb0}
+.isoBtn.on{background:var(--head);border-color:var(--head);color:#faf8f5}
+body.proj .isoBtn{font-size:13.5px;padding:5px 12px}
+
+/* 渲染切換：放在底列左側，比完再決定要不要拿掉 */
+footer select{background:var(--panel);border:1px solid var(--line);color:var(--ink2);border-radius:3px;
+              font-family:var(--f);font-size:12px;padding:4px 6px}
+footer label{display:flex;align-items:center;gap:6px;white-space:nowrap}
 </style>
 <div id="app">
   <header>
@@ -340,6 +354,7 @@ body.proj .th2{font-size:17px}
   </main>
 
   <footer>
+    <label>渲染 <select id="optRender"><option value="std">光影（新）</option><option value="orig">原版</option></select></label>
     <div class="spacer"></div>
     <button class="btn" data-modal="model">這個模型哪裡是推測</button>
     <button class="btn" data-modal="units">度量衡</button>
@@ -1460,9 +1475,12 @@ SCN.buildGround = function (root){
   // 礫漠地面。做成圓盤，拉遠才不會看到方形地面的直角邊。
   // 分兩段：營地一帶完全平坦，140 肘之外開始起伏。
   var R = 700, R0 = 140;
+  // 09-23 起改做深度測試。原本 depthTest:false 會讓這層蓋在所有器具上面，
+  // 器具因此被刷淡；開陰影之後更糟，器具自己的影子會被畫到器具身上。
+  // 跟地面搶深度的問題改用 polygonOffset 解：這層永遠往鏡頭方向讓一點點。
   var macroMat = new THREE.MeshLambertMaterial({
     color:0x9d9d9d, map:SCN.macroTexture(), transparent:true,
-    depthTest:false, depthWrite:false });
+    depthWrite:false, polygonOffset:true, polygonOffsetFactor:-2, polygonOffsetUnits:-8 });
 
   function layer(mat, lift, order){
     var grp = new THREE.Group();
@@ -2235,6 +2253,8 @@ var GHOST, DIMG = null, dimLabels = [];
 var selected = null, labelsOn = true, dimsOn = true, guideSel = null;
 var layerState = {cover4:true,cover3:true,cover2:true,cover1:true,frame:true,south:true,screens:true,furniture:true,court:true,people:true};
 var tourIdx = -1;
+var GHOST_O, GHOST_S, LT = {}, RENDER = 'std', ENV = null, FOG_HEX = 0xd5c8a8, texAll = [];
+var isoId = null, isoWanted = true, isoHidden = [], isoGroup = null, isoBg = null;
 
 /* 有幾何體的項目 → 場景中的標記名 */
 var TAGOF = { ephod:'__priest', robe:'__priest', plate:'__priest', breastpiece:'__priest',
@@ -2310,9 +2330,9 @@ function init(){
   detailEl = document.getElementById('detail');
 
   scene = new THREE.Scene();
-  scene.background = new THREE.Color(0xd8cbaa);   // 天空罩沒載入前的底色，不再用黑底
-  scene.fog = new THREE.Fog(0xd5c8a8, 200, 640);  // 讓地面在碰到邊緣之前就淡進地平線
-  scene.fog = new THREE.Fog(0x0f1216, 260, 620);
+  // 天空罩沒載入前的底色與霧色。霧色要跟地平線的沙色一致，地面才會淡進去；
+  // 09-23 以前這裡第二行又把霧設成深藍 0x0f1216，蓋掉了這一行，地平線因此浮出一條黑帶。
+  scene.fog = new THREE.Fog(FOG_HEX, 200, 640);
 
   // near 拉到 0.5、far 拉到 2600。near 太小會讓遠處的深度解析度崩掉，
   // 那是拉遠時地面浮出暗塊的原因；far 太小會把天空罩的遠端切掉。
@@ -2320,17 +2340,32 @@ function init(){
 
   renderer = new THREE.WebGLRenderer({antialias:true});
   renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
   stageEl.insertBefore(renderer.domElement, labelsEl);
 
-  scene.add(new THREE.HemisphereLight(0xdfe6ee, 0x9c8b68, 0.78));  // 下半改成沙地反光
-  var d1 = new THREE.DirectionalLight(0xfff0d4, 0.82); d1.position.set(90,120,70); scene.add(d1);
-  var d2 = new THREE.DirectionalLight(0x9fb6d6, 0.34); d2.position.set(-70,50,-90); scene.add(d2);
-  scene.add(new THREE.AmbientLight(0xffffff, 0.22));
+  LT.hemi = new THREE.HemisphereLight(0xdfe6ee, 0x9c8b68, 0.78);  // 下半改成沙地反光
+  // 主光方向跟舊版一樣（從東南上方打下來），只是把目標移到會幕中心，陰影範圍才框得住整個院子
+  LT.sun = new THREE.DirectionalLight(0xfff0d4, 0.82);
+  LT.sun.position.set(140,120,70); LT.sun.target.position.set(50,0,0);
+  var big = window.innerWidth > 900;
+  LT.sun.shadow.mapSize.set(big ? 4096 : 2048, big ? 4096 : 2048);
+  var sc = LT.sun.shadow.camera;
+  sc.left = -72; sc.right = 72; sc.top = 72; sc.bottom = -72; sc.near = 20; sc.far = 420;
+  LT.sun.shadow.bias = -0.0004; LT.sun.shadow.normalBias = 0.03;
+  LT.fill = new THREE.DirectionalLight(0x9fb6d6, 0.34); LT.fill.position.set(-70,50,-90);
+  LT.amb = new THREE.AmbientLight(0xffffff, 0.22);
+  scene.add(LT.hemi, LT.sun, LT.sun.target, LT.fill, LT.amb);
 
   root = new THREE.Group(); scene.add(root);
   SCN.build(root);
 
-  GHOST = new THREE.MeshBasicMaterial({color:0x69737f, transparent:true, opacity:0.055, depthWrite:false});
+  GHOST_O = new THREE.MeshBasicMaterial({color:0x69737f, transparent:true, opacity:0.055, depthWrite:false});
+  GHOST_S = GHOST_O.clone(); GHOST_S.color.convertSRGBToLinear(); GHOST_S.toneMapped = false;
+  GHOST = GHOST_O;
+  collectMaterials();
+  var rm = 'std';
+  try { rm = localStorage.getItem('tab3d-render') || 'std'; } catch (e) {}
+  setRender(rm === 'orig' ? 'orig' : 'std');
 
   raycaster = new THREE.Raycaster(); mouse = new THREE.Vector2();
 
@@ -2352,7 +2387,8 @@ function init(){
       updateLabels(); renderer.render(scene, camera);
     },
     go: function(id){ select(id, true); window.__t3d.snap(); },
-    cam: cam, camT: camT
+    cam: cam, camT: camT,
+    lt: LT, renderer: renderer, scene: scene, setRender: function(m){ setRender(m); }
   };
 }
 
@@ -2371,17 +2407,206 @@ function resize(){
 function applyFraming(){
   var w = stageEl.clientWidth, h = stageEl.clientHeight;
   if (!w || !h) return;
-  var pad = 0, tp = document.getElementById('tour');
+  var pad = 0, shiftD = 0, tp = document.getElementById('tour'), sr = stageEl.getBoundingClientRect();
   if (tp && tp.classList.contains('open')){
-    var sr = stageEl.getBoundingClientRect(), pr = tp.getBoundingClientRect();
+    var pr = tp.getBoundingClientRect();
     if (pr.height) pad = Math.max(0, Math.min(h*0.5, sr.bottom - pr.top + 10));
   }
-  var shift = pad * 0.5;
+  // 手機上細節面板從底部升起、蓋掉下半部，主角同樣要推到面板上方那一塊
+  if (window.innerWidth <= 900 && detailEl && detailEl.classList.contains('open')){
+    var dr = detailEl.getBoundingClientRect();
+    // 導覽面板只推半個面板高（沿用 09-05 的取景）；細節面板蓋得多，要整段推上去，主角才落在上方那一塊的正中間
+    if (dr.height) shiftD = Math.max(0, Math.min(h*0.72, sr.bottom - dr.top + 10));
+  }
+  var shift = Math.max(pad * 0.5, shiftD);
   camera.aspect = w/h;
   if (shift < 4){ camera.clearViewOffset(); camera.updateProjectionMatrix(); return; }
   var fullH = h + shift, fullW = w * fullH / h;
   camera.setViewOffset(fullW, fullH, (fullW - w)/2, shift, w, h);
   camera.updateProjectionMatrix();
+}
+
+/* ── 渲染：原版與光影版切換 ─────────────────────────────
+   原版＝Phong／Lambert、沒有陰影、線性輸出。
+   光影版＝Standard 材質、柔和陰影、sRGB 輸出加 ACES 色調映射，並從天空生成環境貼圖。
+   環境貼圖是金器讀得出「金」的關鍵：金屬的顏色幾乎全靠反射周圍，
+   沒有環境可反射，金器就會變成暗沉的古銅棕。
+   兩套材質在載入時各建一次，切換只換指派，不重建場景。 */
+var METAL = {};      // 色碼 → [金屬度, 粗糙度]
+// 09-23 在瀏覽器裡對著約櫃調過：金屬度 0.7 看起來像淺黃塑膠，拉到 0.9 才有金屬的明暗
+METAL[SCN.COLORS.pureGold] = [0.90, 0.20];
+METAL[SCN.COLORS.gold]     = [0.90, 0.26];
+METAL[SCN.COLORS.silver]   = [0.90, 0.24];
+METAL[SCN.COLORS.stoneSilver] = [0.70, 0.34];
+METAL[SCN.COLORS.bronze]   = [0.85, 0.34];
+
+function toStd(m, cache){
+  if (!m) return m;
+  if (cache.has(m)) return cache.get(m);
+  var s;
+  if (m.isMeshPhongMaterial || m.isMeshLambertMaterial){
+    var hex = m.color.getHex(), mt = METAL[hex];
+    var sh = m.isMeshPhongMaterial ? m.shininess : 0;
+    s = new THREE.MeshStandardMaterial({
+      color: m.color.clone().convertSRGBToLinear(),
+      map: m.map, side: m.side, transparent: m.transparent, opacity: m.opacity,
+      depthTest: m.depthTest, depthWrite: m.depthWrite, flatShading: !!m.flatShading,
+      alphaTest: m.alphaTest, polygonOffset: m.polygonOffset,
+      polygonOffsetFactor: m.polygonOffsetFactor, polygonOffsetUnits: m.polygonOffsetUnits,
+      metalness: mt ? mt[0] : 0,
+      // 布、木、皮這類材料用高粗糙度，大平面才不會浮出亮斑（舊版改用 Lambert 就是為了避這個）
+      roughness: mt ? mt[1] : Math.max(0.55, Math.min(0.96, 0.96 - Math.sqrt(sh/150)*0.45)),
+      // 天空是藍灰色，非金屬吃滿環境光會整片發灰；金屬要靠它才有反光
+      envMapIntensity: mt ? 1.2 : 0.45
+    });
+    if (m.emissive) s.emissive = m.emissive.clone().convertSRGBToLinear();
+  } else if (m.color){
+    s = m.clone(); s.color.convertSRGBToLinear(); s.toneMapped = false;
+  } else s = m;
+  s.renderOrder = m.renderOrder;
+  cache.set(m, s);
+  return s;
+}
+
+function collectMaterials(){
+  var cache = new Map(), seen = new Set();
+  scene.traverse(function(o){
+    if (!o.material) return;
+    o.userData.matO = o.material;
+    o.userData.matS = toStd(o.material, cache);
+    var m = o.material;
+    if (m.map && !seen.has(m.map)){ seen.add(m.map); texAll.push(m.map); }
+    if (!o.isMesh) return;
+    // 陰影：地面群組只接不投；半透明的空間體積兩者都不要
+    var inGround = false, p = o;
+    while (p){ if (p === SCN.L.ground){ inGround = true; break; } p = p.parent; }
+    var faint = m.transparent && m.opacity < 0.5;
+    o.castShadow = !inGround && !faint && !m.isMeshBasicMaterial;
+    o.receiveShadow = !faint && !m.isMeshBasicMaterial;
+    o.userData.cast = o.castShadow;
+  });
+}
+
+function buildEnv(){
+  if (ENV) return ENV;
+  var t = SCN.skyTexture();
+  t.mapping = THREE.EquirectangularReflectionMapping;
+  t.encoding = THREE.sRGBEncoding;
+  var pm = new THREE.PMREMGenerator(renderer);
+  ENV = pm.fromEquirectangular(t).texture;
+  pm.dispose(); t.dispose();
+  return ENV;
+}
+
+function lin(hex){ return new THREE.Color(hex).convertSRGBToLinear(); }
+
+function setRender(mode){
+  RENDER = mode;
+  try { localStorage.setItem('tab3d-render', mode); } catch (e) {}
+  var sel = document.getElementById('optRender'); if (sel) sel.value = mode;
+  var keep = selected;
+  exitIso(); setGhost(null);
+  var std = (mode === 'std');
+  GHOST = std ? GHOST_S : GHOST_O;
+  scene.traverse(function(o){
+    if (!o.userData.matO) return;
+    o.material = std ? o.userData.matS : o.userData.matO;
+    o.material.needsUpdate = true;
+  });
+  texAll.forEach(function(t){
+    var enc = std ? THREE.sRGBEncoding : THREE.LinearEncoding;
+    if (t.encoding !== enc){ t.encoding = enc; t.needsUpdate = true; }
+  });
+  renderer.outputEncoding = std ? THREE.sRGBEncoding : THREE.LinearEncoding;
+  renderer.toneMapping = std ? THREE.ACESFilmicToneMapping : THREE.NoToneMapping;
+  renderer.toneMappingExposure = std ? 1.1 : 1.0;
+  renderer.shadowMap.enabled = std;
+  LT.sun.castShadow = std;
+  scene.environment = std ? buildEnv() : null;
+  scene.fog.color = std ? lin(FOG_HEX) : new THREE.Color(FOG_HEX);
+  scene.background = std ? lin(FOG_HEX) : new THREE.Color(FOG_HEX);
+  if (std){
+    // 環境貼圖已經給了一層天光，半球光與環境光要讓出位置，否則整體過曝
+    LT.hemi.color = lin(0xdfe6ee); LT.hemi.groundColor = lin(0x9c8b68); LT.hemi.intensity = 0.6;
+    LT.sun.color = lin(0xfff0d4); LT.sun.intensity = 2.6;
+    LT.fill.color = lin(0x9fb6d6); LT.fill.intensity = 0.30;
+    LT.amb.intensity = 0;
+  } else {
+    LT.hemi.color.setHex(0xdfe6ee); LT.hemi.groundColor.setHex(0x9c8b68); LT.hemi.intensity = 0.78;
+    LT.sun.color.setHex(0xfff0d4); LT.sun.intensity = 0.82;
+    LT.fill.color.setHex(0x9fb6d6); LT.fill.intensity = 0.34;
+    LT.amb.intensity = 0.22;
+  }
+  if (keep) select(keep, false);
+}
+
+/* ── 單件近看：器具單獨放在圓台上 ─────────────────────
+   在場景裡看器具，周圍的豎板、幔子、柱子會一直搶畫面，只能靠薄殼與遮擋剔除硬撐。
+   近看模式把其他東西全部藏起來，地面換成一座圓台，主角就是畫面上唯一的東西。
+   只用在「一件器具」的卡片；人的卡片要看得出站在哪裡，導覽要看得出路線，這兩種都留在場景裡。 */
+var ISO_ITEMS = {ark:1, mercyseat:1, cherubim:1, table:1, menorah:1, incense:1, altar:1, laver:1};
+var ISO_BG = 0xece5db;
+
+function exitIso(){
+  if (!isoId) return;
+  for (var i=0;i<isoHidden.length;i++) isoHidden[i].visible = true;
+  isoHidden.length = 0;
+  if (isoGroup){ scene.remove(isoGroup); isoGroup = null; }
+  scene.background = isoBg || scene.background; isoBg = null;
+  isoId = null;
+  document.body.classList.remove('iso');
+}
+
+function enterIso(id){
+  exitIso();
+  var keep = {}; keep[id] = 1; (WITH[id] || []).forEach(function(t){ keep[t] = 1; });
+  var box = new THREE.Box3(), tmp = new THREE.Box3();
+  root.children.forEach(function(c){
+    if (c === DIMG) return;
+    c.traverse(function(o){
+      if (!(o.isMesh || o.isLine || o.isLineSegments)) return;
+      if (keep[o.userData.itemId]){
+        if (o.isMesh && visibleChain(o)){ tmp.setFromObject(o); box.union(tmp); }
+        return;
+      }
+      if (o.visible){ o.visible = false; isoHidden.push(o); }
+    });
+  });
+  if (box.isEmpty()) { for (var i=0;i<isoHidden.length;i++) isoHidden[i].visible = true; isoHidden.length = 0; return false; }
+  isoId = id;
+  document.body.classList.add('iso');
+
+  var std = (RENDER === 'std');
+  var size = box.getSize(new THREE.Vector3()), ctr = box.getCenter(new THREE.Vector3());
+  var r = Math.max(size.x, size.z) * 0.72 + 0.35;
+  function mk(hex, rough){
+    return std ? new THREE.MeshStandardMaterial({color:lin(hex), roughness:rough, metalness:0})
+               : new THREE.MeshLambertMaterial({color:hex});
+  }
+  isoGroup = new THREE.Group();
+  var floor = new THREE.Mesh(new THREE.CircleGeometry(r*5, 72), mk(0xe6ddd0, 1));
+  floor.rotation.x = -Math.PI/2; floor.position.set(ctr.x, box.min.y - 0.07, ctr.z);
+  floor.receiveShadow = true; isoGroup.add(floor);
+  var ped = new THREE.Mesh(new THREE.CylinderGeometry(r, r*1.03, 0.06, 72), mk(0xd9cebf, 0.9));
+  ped.position.set(ctr.x, box.min.y - 0.035, ctr.z);
+  ped.receiveShadow = true; isoGroup.add(ped);
+  scene.add(isoGroup);
+  isoBg = scene.background;
+  scene.background = std ? lin(ISO_BG) : new THREE.Color(ISO_BG);
+
+  var d = Math.max(size.x, size.y, size.z) * 2.3 + 1.2;
+  if (window.innerWidth <= 900) d *= 3.8;   // 手機直式畫面窄；細節面板的取景偏移又會把畫面放大約 1.7 倍
+  flyTo({at:[ctr.x, box.min.y + size.y*0.42, ctr.z], dist:d, th:0.86, ph:1.16});
+  return true;
+}
+function isoBtnHtml(id){
+  if (!ISO_ITEMS[id] || tourIdx >= 0) return '';
+  return '<button class="isoBtn'+(isoId ? ' on' : '')+'" id="isoBtn">'+(isoId ? '放回場景' : '單件近看')+'</button>';
+}
+function bindIsoBtn(){
+  var b = document.getElementById('isoBtn');
+  if (!b) return;
+  b.onclick = function(){ isoWanted = !isoId; if (selected) select(selected, true); };
 }
 
 /* ── 左側清單 ───────────────────────────────────────── */
@@ -2409,6 +2634,7 @@ function selectZone(zid){
   var z = null;
   TAB.ZONES.forEach(function(x){ if (x.id === zid) z = x; });
   if (!z) return;
+  exitIso();
   selected = null; guideSel = null;
   clearDims();
   listEl.querySelectorAll('button').forEach(function(b){
@@ -2438,7 +2664,7 @@ function selectZone(zid){
   if (z.notes) h += noteBtn(z.notes);
   h += '</div>';
   detailEl.innerHTML = h; detailEl.classList.add('open');
-  bindNote(); document.getElementById('dclose').onclick = clearSel;
+  bindNote(); frameSoon(); document.getElementById('dclose').onclick = clearSel;
   detailEl.scrollTop = 0;
 }
 
@@ -2474,6 +2700,7 @@ function selectGuide(id){
   var g = null;
   TAB.GUIDE.forEach(function(x){ if (x.id === id) g = x; });
   if (!g) return;
+  exitIso();
   guideSel = id; selected = null;
   clearDims();
   listEl.querySelectorAll('button').forEach(function(b){ b.classList.remove('sel'); });
@@ -2509,7 +2736,7 @@ function renderGuide(g){
   if (g.notes) h += noteBtn(g.notes);
   h += '</div>';
   detailEl.innerHTML = h; detailEl.classList.add('open');
-  bindNote();
+  bindNote(); frameSoon();
   document.getElementById('dclose').onclick = clearSel;
   detailEl.scrollTop = 0;
 }
@@ -2571,6 +2798,7 @@ function updateLabels(){
   labObjs.forEach(function(L){
     L.el.style.display = 'none';
     if (!labelsOn && !L.compass) return;
+    if (isoId && L.compass) return;
     if (selected && !L.compass && L.id !== selected) return;
     if (!L.compass && labelSuppressed(L.id)) return;
     var dist = camera.position.distanceTo(L.v);
@@ -2621,6 +2849,7 @@ function showDims(it){
   clearDims();
   var f = SCN.FOCUS[it.id]; if (!f || !f.dim) return;
   var d = f.dim, col = new THREE.Color(0x7d8894);
+  if (RENDER === 'std') col.convertSRGBToLinear();
   DIMG = new THREE.Group();
   var mat = new THREE.LineBasicMaterial({color:col});
   var k = Math.max(d.s[0],d.s[1],d.s[2])*0.26 + 0.40;   // 拉開到物件外緣，標註才不會蓋住器具
@@ -2709,9 +2938,11 @@ function setGhost(tag, extra){
     var mine = !!keep[o.userData.itemId];
     if (!tag || mine){
       if (o.userData.origMat){ o.material = o.userData.origMat; delete o.userData.origMat; }
+      o.castShadow = !!o.userData.cast;
     } else {
       if (!o.userData.origMat) o.userData.origMat = o.material;
       o.material = GHOST;
+      o.castShadow = false;        // 薄殼不投影，否則幾乎看不見的東西會在地上留一大片影子
       ghostList.push(o);
     }
   });
@@ -2784,15 +3015,18 @@ function applyContext(id){
 function select(id, fly){
   var it = TAB.ITEMS.filter(function(i){ return i.id === id; })[0];
   if (!it){ clearSel(); return; }
+  exitIso();
   selected = id; guideSel = null;
   document.getElementById('guide').querySelectorAll('button').forEach(function(b){ b.classList.remove('sel'); });
   listEl.querySelectorAll('button').forEach(function(b){ b.classList.toggle('sel', b.dataset.id === id); });
   applyContext(id);
-  setGhost(ABSTRACT[id] ? null : (TAGOF[id] || id), WITH[id]);
+  var iso = ISO_ITEMS[id] && isoWanted && tourIdx < 0;
+  setGhost(iso || ABSTRACT[id] ? null : (TAGOF[id] || id), WITH[id]);
   showDims(it);
+  if (iso) iso = enterIso(id);
   renderDetail(it);
   var f = SCN.FOCUS[id];
-  if (fly && f){
+  if (fly && f && !iso){
     var o = {at:f.at, dist:f.dist};
     if (id === 'gate'){ o.th = Math.PI/2 - 0.08; o.ph = 1.42; }
     else if (id === 'court' || id === 'totals'){ o.th = 0.95; o.ph = 0.80; }
@@ -2803,19 +3037,22 @@ function select(id, fly){
     flyTo(o);
   }
 }
+function frameSoon(){ applyFraming(); setTimeout(applyFraming, 260); }   // 面板有 0.2 秒轉場，轉完再算一次
 function clearSel(){
+  exitIso();
   selected = null; guideSel = null; clearDims(); setGhost(null);
   var ge = document.getElementById('guide');
   if (ge) ge.querySelectorAll('button').forEach(function(b){ b.classList.remove('sel'); });
   if (SCN.L.spaces) SCN.L.spaces.visible = false;
   listEl.querySelectorAll('button').forEach(function(b){ b.classList.remove('sel'); });
   detailEl.classList.remove('open'); detailEl.innerHTML='';
+  frameSoon();
 }
 
 /* ── 右側細節 ───────────────────────────────────────── */
 function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;'); }
 function renderDetail(it){
-  var h = '<div class="inner"><button class="close" id="dclose">×</button>';
+  var h = '<div class="inner"><button class="close" id="dclose">×</button>' + isoBtnHtml(it.id);
   h += '<h2>'+esc(it.name)+'</h2>';
   h += '<div class="ref">'+esc(it.ref)+'</div>';
   h += '<div class="story">'+esc(it.story)+'</div>';
@@ -2830,7 +3067,7 @@ function renderDetail(it){
   if (it.foot) h += '<div class="foot">'+esc(it.foot)+'</div>';
   h += '</div>';
   detailEl.innerHTML = h; detailEl.classList.add('open');
-  bindNote();
+  bindNote(); bindIsoBtn(); frameSoon();
   document.getElementById('dclose').onclick = clearSel;
   detailEl.scrollTop = 0;
 }
@@ -2871,7 +3108,7 @@ function openModal(kind){
        + '「信仰引導」是跨越單件器具的幾條主線，點下去畫面會跟著切到相關位置。</p>';
     h += '<p><b>剖開來看</b>　右上角的圖層面板由外而內排，可以一層一層掀掉，看到裡面的器具與人。</p>';
     h += '<p><b>走一遍</b>　按右上角的「走一遍」，會從院門一路帶到約櫃，十六站。</p>';
-    h += '<h3 class="sec">在講台上用之前</h3><p style="color:#767f8b;font-size:12.5px">模型上有些大小是經文沒有給、為了畫得出來才定的。'
+    h += '<h3 class="sec">在講台上用之前</h3><p style="color:var(--ink3);font-size:12.5px">模型上有些大小是經文沒有給、為了畫得出來才定的。'
        + '哪些可以直接引用、哪些只能說「推算大約是」，全部寫在底下的<b>「這個模型哪裡是推測」</b>。'
        + '講台上要用數字之前，請先看那一頁。</p>';
   }
@@ -2911,6 +3148,8 @@ function setDrawer(on){
 }
 
 function bindUI(){
+  var or = document.getElementById('optRender');
+  if (or){ or.value = RENDER; or.onchange = function(){ setRender(or.value); }; }
   var bp = document.getElementById('btnProj');
   var saved = '0';
   try { saved = localStorage.getItem('tab3d-proj') || '0'; } catch (e) {}
